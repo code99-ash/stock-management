@@ -1,0 +1,20 @@
+{
+    "require": {
+        "illuminate/database": "^8.22",
+        "illuminate/events": "^8.22",
+        "vlucas/phpdotenv": "^5.2",
+        "illuminate/support": "^8.22",
+        "illuminate/hashing": "^8.22",
+        "firebase/php-jwt": "^5.2",
+        "illuminate/config": "^8.24",
+        "illuminate/mail": "^8.24",
+        "symfony/mailer": "^5.2",
+        "symfony/google-mailer": "^5.2",
+        "swiftmailer/swiftmailer": "^6.0",
+        "yabacon/paystack-php": "^2.2"
+    },
+    "autoload": {
+        "files": ["db.php"],
+        "classmap": ["Models", "Classes"]
+    }
+}

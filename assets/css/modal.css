@@ -1,0 +1,10 @@
+.closeBtn{
+    outline: none;
+}
+.form-control{
+    box-shadow: none !important;
+}
+.form-control:focus{
+    transition: ease-in-out 0.5s;
+    border-color: green;
+}

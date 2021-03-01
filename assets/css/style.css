@@ -1,0 +1,40 @@
+body {
+    overflow-x: hidden;
+}
+#top-nav {
+    transition: .5s ease-in-out;
+}
+.bg-transparent {
+    background: transparent !important;
+    padding: 0 80px !important;
+}
+.lift-upward {
+    margin-top: -50px !important;
+}
+.nav-link {
+    color: #eaeaea !important;
+}
+
+.top-link--primary {
+    color: rgb(31, 31, 46) !important;
+    font-weight: 500;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    font-family: fantasy;
+    letter-spacing: .2px;
+    padding-bottom: 5px !important;
+}
+
+.new-brand-color {
+    color: rgb(31, 31, 46) !important;
+}
+
+@media (min-width: 576px) {
+
+    .custom-jumbotron {
+        padding-top: 3rem 1rem !important;
+    }
+
+}
