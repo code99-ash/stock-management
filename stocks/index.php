@@ -133,10 +133,12 @@ include '../partials/scripts.php';
       // console.log(data.length)
       let arr = [];
       for(var i=0; i < data.length; i++) {
-         tr = document.createElement('tr');
+        let id = data[i].id;
+
+        tr = document.createElement('tr');
+        tr.setAttribute('id', `tr_${id}`);
 
         let fullName = `${data[i].fname} ${data[i].lname}`;
-        let id = data[i].id;
 
 
          var dropDown = `<div class="nav-item dropdown">
@@ -150,21 +152,23 @@ include '../partials/scripts.php';
           
                         
                         let  myArr = [
-                        i+1, 
-                        data[i].name, 
-                        data[i].price, 
-                        data[i].quantity, 
-                        fullName , 
-                        data[i].created_at,
-                        dropDown
+                        ['S/N', i+1], 
+                        ['name', data[i].name], 
+                        ['price', data[i].price], 
+                        ['quantity', data[i].quantity], 
+                        ['fullName', fullName] , 
+                        ['date', data[i].created_at],
+                        ['option', dropDown]
                       ]
                       arr = [...arr, myArr];
                       
                       for(let j=0; j < myArr.length; j++) {
                         td = document.createElement('td');
-                        td.innerHTML =  myArr[j];
-                        
-              tr.appendChild(td);
+
+                        td.innerHTML =  myArr[j][1];
+                        td.setAttribute('id',  `td_${myArr[j][0]}_${id}`); // Set class name for each
+
+                      tr.appendChild(td);
               
             }
             
@@ -204,9 +208,20 @@ include '../partials/scripts.php';
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200){
             if(JSON.parse(xhr.response).status){
-              document.querySelector('#tab').innerHTML = ""
+              // document.querySelector('#tab').innerHTML = ""
+              // getData();
+              let res = JSON.parse(xhr.response);
+              
+              let id = res.id;
+              let price = res.price;
+              let qty = res.quantity;
+              
+              document.querySelector(`#td_price_${id}`).innerHTML = price;
+
+              document.querySelector(`#td_quantity_${id}`).innerHTML = qty;
+
               document.querySelector('.closeBtn').click()
-              getData();
+              
             }
           }
         };

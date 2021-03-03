@@ -19,7 +19,7 @@ Manager::schema()->create('staffs', function($table) {
     $table->string('fname');
     $table->string('lname');
     $table->enum('gender', ['male', 'female'])->default('male');
-    $table->string('email');
+    $table->string('email')->unique();
     $table->string('phone_no')->nullable();
     $table->string('avatar')->nullable();
     $table->enum('active', ['true', 'false'])->default('true');
@@ -71,13 +71,5 @@ Role::create([
     'name' => 'staff'
 ]);
 
-Staff::create([
-    'role_id' => 1,
-    'title' => 'Mr',
-    'fname' => 'Ikhlas',
-    'lname' => 'Oyelami',
-    'email' => 'admin@gmail.com',
-    'password' => password_hash('admin', PASSWORD_BCRYPT)
-]);
 
 ?>

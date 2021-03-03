@@ -5,6 +5,8 @@ if (isset($_GET['newStock'])) {
     $name = $_GET['name'];
     $price = $_GET['price'];
     $qty = $_GET['qty'];
+    $userId = $_GET['userId'];
+
 
     $check = Stock::where('name', $name)->get();
 
@@ -16,8 +18,8 @@ if (isset($_GET['newStock'])) {
                 'name' => $name,
                 'price' => $price,
                 'quantity' => $qty,
-                'added_by' => 1,
-                'updated_by' => 1,
+                'added_by' => $userId,
+                'updated_by' => $userId,
             ])
         ) {
             echo 'New Stock was added Successfully';
@@ -40,7 +42,13 @@ if (isset($_GET['updateStock'])) {
     ];
 
     if (Stock::where('id', $id)->update($data)) {
-        echo json_encode(['status' => true, 'message' => 'Update Successful']);
+        echo json_encode([
+            'status' => true, 
+            'message' => 'Update Successful',
+            'id' => $id,
+            'price' => $price,
+            'quantity' => $qty
+            ]);
     } else {
         echo json_encode(['status' => false, 'message' => 'Failed to update']);
     }
@@ -75,6 +83,7 @@ if (isset($_GET['allStocks'])) {
         'staffs.lname as lname',
         'stock.created_at as created_at'
     )
+        ->orderBy('stock.updated_at', 'DESC')
         ->join('staffs', 'added_by', '=', 'staffs.id')
         ->get();
 

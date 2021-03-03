@@ -134,7 +134,9 @@ $rel = '../../'; ?>
     var fd = new FormData();
     var name =  document.querySelector('#name').value
     var price =  document.querySelector('#price').value
-    var qty =  document.querySelector('#qty').value
+    var qty =  document.querySelector('#qty').value;
+
+    var user_id  = JSON.parse(sessionStorage.getItem('_ud')).id;
     
     var xhr = new XMLHttpRequest();
 
@@ -146,7 +148,7 @@ $rel = '../../'; ?>
         }
     };
 
-    xhr.open("post", `../../server/api/stocks.php?newStock=true&name=${name}&price=${price}&qty=${qty}`, true);
+    xhr.open("post", `../../server/api/stocks.php?newStock=true&name=${name}&price=${price}&qty=${qty}&userId=${user_id}`, true);
     xhr.send(null);
        
    }
