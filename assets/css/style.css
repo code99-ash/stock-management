@@ -1,6 +1,10 @@
 body {
     overflow-x: hidden;
 }
+.stickySubNav {
+    position: sticky !important;
+    top: 100px !important; 
+}
 #top-nav {
     transition: .5s ease-in-out;
 }

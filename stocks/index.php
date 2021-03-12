@@ -19,7 +19,7 @@ $rel = '../'; ?>
     <title>INVENTORY SYSTEM</title>
     
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="../assets/bootstrap-4.6.0-dist/css/bootstrap.css">
+     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
      <link rel="stylesheet" href="../assets/css/style.css">
      <link rel="stylesheet" href="../assets/css/modal.css">
 
@@ -95,9 +95,9 @@ $rel = '../'; ?>
   </div>
 <?php
 include '../partials/footer.php';
-include '../partials/scripts.php';
 ?>
-
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.js"></script>
 <script src = "../assets/js/Inventory.js"></script>
 <script src = "../assets/js/main.js"></script>
 
@@ -208,8 +208,7 @@ include '../partials/scripts.php';
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200){
             if(JSON.parse(xhr.response).status){
-              // document.querySelector('#tab').innerHTML = ""
-              // getData();
+              
               let res = JSON.parse(xhr.response);
               
               let id = res.id;

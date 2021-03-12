@@ -1,6 +1,11 @@
 <?php
 require '../vendor/autoload.php';
 
+$feedback = array(
+    'success' => false,
+    'message' => '' 
+);
+
 if (isset($_GET['details'])) {
     $title = $_GET['title'];
     $fname = $_GET['fname'];
@@ -22,13 +27,18 @@ if (isset($_GET['details'])) {
                 'password' => password_hash($pass, PASSWORD_BCRYPT),
             ])
         ) {
-            echo 'Staff was successfully added';
+            $feedback['success'] = true;
+            $feedback['message'] = 'Staff was successfully added';
         } else {
-            echo 'Failed to add new Staff';
+            $feedback['success'] = false;
+            $feedback['message'] = 'Failed to add new Staff';
         }
     } else {
-        echo 'Credentials already exist';
+        $feedback['success'] = false;
+        $feedback['message'] = 'Credentials already exist';
     }
+
+    echo json_encode($feedback);
 }
 
 if (isset($_GET['login'])) {
@@ -46,23 +56,19 @@ if (isset($_GET['login'])) {
     $isValidPassword = password_verify($pass, $hash);
 
     if((count($staff) > 0) && $isValidPassword) {
-        $data = [
-            'success' => true,
-            'message' => [
-                'id' => $staff[0]['id'],
-                'email' => $staff[0]['email'],
-                'fname' => $staff[0]['fname'],
-                'lname' => $staff[0]['lname'],
-            ]
-        ];
+        $feedback['success'] = true;
+        $feedback['message'] =  [
+                                    'id' => $staff[0]['id'],
+                                    'email' => $staff[0]['email'],
+                                    'fname' => $staff[0]['fname'],
+                                    'lname' => $staff[0]['lname'],
+                                ];
     } else {
-        $data = [
-            'success' => false,
-            'message' => 'Incorrect Email/Password'
-        ];
+        $feedback['success'] = false;
+        $feedback['message'] = 'Incorrect Email/Password';
     }
 
-    echo  json_encode($data);
+    echo  json_encode($feedback);
 
 }
 

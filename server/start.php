@@ -1,9 +1,12 @@
 <?php
 
 require 'vendor/autoload.php';
-
 Role::create([
     'name' => 'admin'
+]);
+
+Role::create([
+    'name' => 'admin_staff'
 ]);
 
 Staff::create([

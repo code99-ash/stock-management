@@ -48,8 +48,10 @@ Manager::schema()->dropIfExists('sales');
 Manager::schema()->create('sales', function($table) {
     $table->increments('id');
     $table->integer('stock_id')->unsigned();
-    $table->string('payment_reference');
-    $table->string('transaction_id');
+    $table->string('client_name')->nullable();
+    $table->string('email')->nullable();
+    $table->string('payment_reference')->nullable();
+    $table->string('transaction_id')->nullable()    ;
     $table->integer('quantity');
     $table->float('amount', 7, 2);
     $table->enum('paid_with', ['cash', 'credit card'])->default('cash');
@@ -59,17 +61,6 @@ Manager::schema()->create('sales', function($table) {
     $table->foreign('signed_by')->references('id')->on('staffs')->onDelete('no action');
 });
 
-Role::create([
-    'name' => 'admin'
-]);
-
-Role::create([
-    'name' => 'admin_staff'
-]);
-
-Role::create([
-    'name' => 'staff'
-]);
 
 
 ?>

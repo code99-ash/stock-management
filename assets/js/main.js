@@ -6,7 +6,7 @@ var brand = document.querySelectorAll('.navbar-brand');
 var screenWidth = window.innerWidth;
 
 window.addEventListener('resize', () => {
-    console.log(window.innerWidth)
+    // console.log(window.innerWidth)
     if(window.innerWidth > 600) {
         navDefault();
     } 
@@ -78,6 +78,8 @@ function closeAlert() {
 }
 
 var staff = JSON.parse(sessionStorage.getItem('_ud'));
-var fname = staff['fname'];
+if(staff) {
+    var fname = staff['fname'];
+}
 
 document.getElementById('username').innerHTML = fname;

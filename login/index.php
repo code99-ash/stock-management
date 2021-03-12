@@ -6,7 +6,7 @@
     <title>INVENTORY SYSTEM</title>
 
      <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../assets/bootstrap-4.6.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/guest.css">
 </head>
 
@@ -50,9 +50,10 @@
 </div>
     
 
- <?php
-    include '../partials/scripts.php';
- ?>
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.js"></script>
+<script src = "../assets/js/Inventory.js"></script>
+<script src = "../assets/js/main.js"></script>
 
  <script>
        // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -103,7 +104,7 @@
                 } else {
                   
                   sessionStorage.setItem('_ud', JSON.stringify(res.message));
-                  window.location = '../stocks/';
+                  window.location = '../';
 
                 }
             }

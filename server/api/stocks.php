@@ -1,6 +1,13 @@
 <?php
 require '../vendor/autoload.php';
 
+
+$feedback = array(
+    'success' => false,
+    'message' => '' 
+);
+
+
 if (isset($_GET['newStock'])) {
     $name = $_GET['name'];
     $price = $_GET['price'];
@@ -10,23 +17,29 @@ if (isset($_GET['newStock'])) {
 
     $check = Stock::where('name', $name)->get();
 
+    $data = [
+        'name'          => $name,
+        'price'         => $price,
+        'quantity'      => $qty,
+        'added_by'      => $userId,
+        'updated_by'    => $userId,
+    ];
+
     if (count($check) > 0) {
-        echo 'Item name already Exist';
+        $feedback['success'] = false;
+        $feedback['message'] = 'Item name already Exist';
     } else {
-        if (
-            Stock::create([
-                'name' => $name,
-                'price' => $price,
-                'quantity' => $qty,
-                'added_by' => $userId,
-                'updated_by' => $userId,
-            ])
-        ) {
-            echo 'New Stock was added Successfully';
+        if (Stock::create($data)) {
+            $feedback['success'] = true;
+            $feedback['message'] = 'New Stock was added Successfully';
         } else {
-            echo 'Failed to add new stock';
+            $feedback['success'] = false;
+            $feedback['message'] = 'Failed to add new stock';
         }
     }
+
+    echo json_encode($feedback);
+
 }
 
 if (isset($_GET['updateStock'])) {
@@ -59,17 +72,22 @@ if (isset($_GET['deleteItem'])) {
     $id = $_GET['id'];
 
     if (Stock::where('id', $id)->delete()) {
-        echo json_encode(['status' => true, 'message' => 'Delete Successful']);
+        $feedback['success'] = true;
+        $feedback['message'] = 'Deleted Successfully';
     } else {
-        echo json_encode(['status' => false, 'message' => 'Failed to delete']);
+        $feedback['success'] = false;
+        $feedback['message'] = 'Failed to delete';
     }
+
+    echo json_encode($feedback);
 }
 
 if (isset($_GET['findStocks'])) {
     $id = $_GET['id'];
     $stock = Stock::where('id', $id)
-        ->get()
-        ->first();
+                    ->get()
+                    ->first();
+                    
     echo json_encode($stock);
 }
 

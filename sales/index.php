@@ -19,7 +19,7 @@ $rel = '../'; ?>
     <title>INVENTORY SYSTEM</title>
     
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="../assets/bootstrap-4.6.0-dist/css/bootstrap.css">
+     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css">
      <link rel="stylesheet" href="../assets/css/style.css">
      <link rel="stylesheet" href="../assets/css/modal.css">
 
@@ -109,9 +109,11 @@ $rel = '../'; ?>
 
 <?php
 include '../partials/footer.php';
-include '../partials/scripts.php';
 ?>
 
+<script src = "../assets/js/jquery.js"></script>
+<script src = "../assets/bootstrap/js/bootstrap.bundle.js"></script>
+<script src = "../assets/bootstrap/js/bootstrap.js"></script>
 <script src = "../assets/js/Inventory.js"></script>
 <script src = "../assets/js/main.js"></script>
 

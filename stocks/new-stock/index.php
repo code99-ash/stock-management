@@ -18,7 +18,7 @@ $rel = '../../'; ?>
     <title>INVENTORY SYSTEM</title>
 
      <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../assets/bootstrap-4.6.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/css/guest.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
@@ -87,9 +87,8 @@ $rel = '../../'; ?>
     </div>
 </div>
     
-<script src="../../assets/bootstrap-4.6.0-dist/js/jquery.js"></script>
-<script src="../../assets/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/bootstrap-4.6.0-dist/js/bootstrap.js"></script>
+<script src="../../assets/js/jquery.js"></script>
+<script src="../../assets/bootstrap/js/bootstrap.js"></script>
 <script src="../../assets/js/main.js"></script>
 <script src="../../assets/js/inventory.js"></script>
 <script>
@@ -144,7 +143,7 @@ $rel = '../../'; ?>
         if (xhr.readyState == 4 && xhr.status == 200){
             // console.log(xhr.response)
             document.querySelector('.alert').style.display = 'block';
-            document.querySelector('#notification').innerHTML = xhr.response;
+            document.querySelector('#notification').innerHTML = xhr.response.message;
         }
     };
 
