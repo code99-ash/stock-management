@@ -94,6 +94,7 @@ if (isset($_GET['allSales'])) {
         )
             ->join('stock', 'stock.id', 'sales.stock_id')
             ->join('staffs', 'staffs.id', 'sales.signed_by')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         echo json_encode($sales);
@@ -115,6 +116,7 @@ if (isset($_GET['allSales'])) {
             )
             ->join('stock', 'stock.id', 'sales.stock_id')
             ->join('staffs', 'staffs.id', 'sales.signed_by')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
             echo json_encode($sales);
