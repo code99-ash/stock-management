@@ -79,9 +79,7 @@ if (isset($_GET['singleCashSale'])) {
 
 if (isset($_GET['allSales'])) {
 
-    $staffId = $_GET['staffId'];
-
-    if (!$staffId) {
+    if (!isset($_GET['staffId'])) {
 
         $sales = Sale::select(
             'staffs.fname as fname',
@@ -90,7 +88,7 @@ if (isset($_GET['allSales'])) {
             'stock.price',
             'stock.quantity as remain',
             'sales.quantity',
-            'sales.amount',
+            'sales.amount as total',
             'sales.paid_with',
             'sales.created_at'
         )
@@ -99,9 +97,10 @@ if (isset($_GET['allSales'])) {
             ->get();
 
         echo json_encode($sales);
-        
+
     } else {
 
+        $staffId = $_GET['staffId'];
         $sales = Sale::where('sales.signed_by', $staffId)
             ->select(
                 'staffs.fname as fname',

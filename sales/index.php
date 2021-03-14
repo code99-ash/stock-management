@@ -93,7 +93,9 @@ $rel = '../'; ?>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Revenue</th>
+                        <th>Remaining</th>
+                        <th>Paid With</th>
+                        <th>Timestamp</th>
                         </tr>
                     </thead>
                     <tbody id="tab">
@@ -127,66 +129,62 @@ include '../partials/footer.php';
   function getData() {
     
     var xhr = new XMLHttpRequest();
+    var tbody = document.querySelector('tbody#tab');
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200){
-            let arr = xhr.response;
-            if(arr.length > 0) {
-              // console.log(arr)
-              createTableRows(JSON.parse(arr))
+            var sales = JSON.parse(xhr.response);
+            console.log("sales",sales);
+
+            for (let i = 0; i < sales.length; i++) {
+              const element = sales[i];
+              
+              var tr = document.createElement('tr');
+
+              let tdZero = document.createElement('td'); // Zero td For item Name
+                  tdZero.innerHTML = i + 1;
+                  tr.appendChild(tdZero);
+  
+              let tdFirst = document.createElement('td'); // First td For item Name
+                  tdFirst.innerHTML = element['name'];
+                  tr.appendChild(tdFirst);
+                  
+              let tdSecond = document.createElement('td'); // Second td For Price
+                  tdSecond.innerHTML = element['price'];
+                  tr.appendChild(tdSecond);
+                  
+              let tdThird = document.createElement('td'); // Third td For Quantity
+                  tdThird.innerHTML = element['quantity'];
+                  tr.appendChild(tdThird);
+                  
+              let tdFourth = document.createElement('td'); // Fourth td For Total
+                  tdFourth.innerHTML = element['total'];
+                  tr.appendChild(tdFourth);
+
+                  
+              let tdFifth = document.createElement('td'); // Fifth td For Remaining
+                  tdFifth.innerHTML = element['remain'];
+                  tr.appendChild(tdFifth);
+                  
+              let tdSixth = document.createElement('td'); // Sixth td For Payment mode
+                  tdSixth.innerHTML = element['paid_with'];
+                  tr.appendChild(tdSixth);
+                  
+              let tdSeventh = document.createElement('td'); // Seventh td For Timestamp
+                  tdSeventh.innerHTML = element['created_at'];
+                  tr.appendChild(tdSeventh);
+                  
+                  tbody.appendChild(tr)
+            }
+
             }
         }
+
+        xhr.open("get", `../server/api/sales.php?allSales=true`, true);
+        xhr.send(null);
     };
 
-    xhr.open("post", '../server/api/stocks.php?allStocks=true', true);
-    xhr.send(null);
-  }
 
-
-  function createTableRows(data) {
-      let tbody = document.querySelector('tbody');
-      var tr = null;
-      var td = null
-      // console.log(data.length)
-      let arr = [];
-      for(var i=0; i < data.length; i++) {
-         tr = document.createElement('tr');
-
-        let fullName = `${data[i].fname} ${data[i].lname}`;
-        let id = data[i].id;
-
-
-         var dropDown = `<div class="nav-item dropdown">
-                            <a class="text-info dropdown-toggle" href="#" id="more${i}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">more</a>
-                            <div class="dropdown-menu" aria-labelledby="more${i}">
-                              <a class="dropdown-item text-info" onclick="showEditModal(${id})" data-toggle="modal" data-target="#editModal">Edit</a>
-                              <a class="dropdown-item text-danger" onclick="showDeleteModal(${id})" data-toggle="modal" data-target="#deleteModal">Delete</a>
-                            </div>
-                        </div>`;
-          
-          
-                        
-                        let  myArr = [
-                        i+1, 
-                        data[i].name, 
-                        data[i].price, 
-                        data[i].quantity, 
-                        parseFloat(data[i].price) * data[i].quantity,
-                        "0.00"
-                      ]
-                      arr = [...arr, myArr];
-                      
-                      for(let j=0; j < myArr.length; j++) {
-                        td = document.createElement('td');
-                        td.innerHTML =  myArr[j];
-                        
-              tr.appendChild(td);
-              
-            }
-            
-            tbody.appendChild(tr);
-          }
-        }
 
     </script>
 
