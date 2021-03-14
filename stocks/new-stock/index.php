@@ -143,7 +143,8 @@ $rel = '../../'; ?>
         if (xhr.readyState == 4 && xhr.status == 200){
             // console.log(xhr.response)
             document.querySelector('.alert').style.display = 'block';
-            document.querySelector('#notification').innerHTML = xhr.response.message;
+            document.querySelector('#notification').innerHTML = JSON.parse(xhr.response).message;
+            console.log(xhr.response)
         }
     };
 

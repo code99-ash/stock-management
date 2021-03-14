@@ -151,7 +151,7 @@ $rel = '../../'; ?>
         if (xhr.readyState == 4 && xhr.status == 200){
             // console.log(xhr.response)
             document.querySelector('.alert').classList.remove('d-none');
-            document.querySelector('#notification').innerHTML = xhr.response.message;
+            document.querySelector('#notification').innerHTML = JSON.parse(xhr.response).message;
         }
     };
 

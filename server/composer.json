@@ -5,7 +5,6 @@
         "vlucas/phpdotenv": "^5.2",
         "illuminate/support": "^8.22",
         "illuminate/hashing": "^8.22",
-        "firebase/php-jwt": "^5.2",
         "illuminate/config": "^8.24",
         "illuminate/mail": "^8.24",
         "symfony/mailer": "^5.2",
@@ -15,6 +14,6 @@
     },
     "autoload": {
         "files": ["db.php"],
-        "classmap": ["Models", "Classes"]
+        "classmap": ["Models"]
     }
 }

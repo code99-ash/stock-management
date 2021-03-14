@@ -46,7 +46,7 @@
     <?php 
           $rel = './';
           
-          include 'partials/top-nav.php';
+          // include 'partials/top-nav.php';
           include 'partials/payment-modal.php';
      ?>
     <div class="jumbotron custom-jumbotron bg-success text-light rounded-0 mb-0">
@@ -70,7 +70,6 @@
       </nav>
 
 <div class="container">
-  <h2 class="display-4 text-muted">Stock Items Summary</h2>
   
   <div class="row">
     <table class="table col-12 mx-auto table-responsive-md table-bordered table-striped">    
@@ -87,15 +86,7 @@
         </tr>
       </thead>
       <tbody id="tab">
-        <tr>
-            <td>1</td>
-            <td>1name</td>
-            <td>pricw</td>
-            <td>kk</td>
-            <td>kksss</td>
-            <td>kksss</td>
-            <td>kksss</td>
-        </tr>
+        
       </tbody>
     </table>
   </div>
@@ -111,5 +102,57 @@ include 'partials/footer.php';
 <script src = "assets/js/Inventory.js"></script>
 <script src = "assets/js/main.js"></script>
 <script src = "assets/js/payment.js"></script>
+<script>
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4 && xhr.status == 200){
+
+            var sales = JSON.parse(xhr.response);
+            var tbody = document.querySelector('tbody#tab');
+
+            console.log(sales)
+
+            for (let i = 0; i < sales.length; i++) {
+              const element = sales[i];
+              tr = document.createElement('tr');
+
+              let tdZero = document.createElement('td'); // Zero td For item Name
+                  tdZero.innerHTML = i + 1;
+                  tr.appendChild(tdZero);
+
+              let tdFirst = document.createElement('td'); // First td For item Name
+                  tdFirst.innerHTML = element['name'];
+                  tr.appendChild(tdFirst);
+                  
+              let tdSecond = document.createElement('td'); // Second td For Price
+                  tdSecond.innerHTML = element['price'];
+                  tr.appendChild(tdSecond);
+                  
+              let tdThird = document.createElement('td'); // Third td For Quantity
+                  tdThird.innerHTML = element['quantity'];
+                  tr.appendChild(tdThird);
+                  
+              let tdFourth = document.createElement('td'); // Fourth td For Staff name
+                  tdFourth.innerHTML = element['fname'] + ' ' + element['lname'];
+                  tr.appendChild(tdFourth);
+                  
+              let tdFifth = document.createElement('td'); // Fifth td For Timestamp
+                  tdFifth.innerHTML = element['created_at'];
+                  tr.appendChild(tdFifth);
+                  
+              // let tdFifth = document.createElement('td'); // Fifth td For Timestamp
+              //     tdFifth.innerHTML = sales['created_at'];
+              //     tr.appendChild(tdFifth);
+
+              tbody.appendChild(tr)
+            }
+        }
+    };
+
+    xhr.open("get", `server/api/sales.php?allSales=true&staffId=${staffId}`, true);
+    xhr.send(null);
+</script>
 </body>
 </html>

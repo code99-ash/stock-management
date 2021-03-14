@@ -11,7 +11,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             
             <li class="nav-item active">
-                <a class="nav-link top-link ml-3" href="/">Dashboard <span class="sr-only">(current)</span></a>
+                <a class="nav-link top-link ml-3" href="<?php $rel ?>">Dashboard <span class="sr-only">(current)</span></a>
             </li>
             
             <li class="nav-item dropdown ml-3">

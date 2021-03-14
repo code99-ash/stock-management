@@ -1,7 +1,12 @@
 <?php
 require '../vendor/autoload.php';
-$sale = new Sale();
 
+// $dbc = mysqli_connect(
+//     $_ENV['DATABASE_HOST'],
+//     $_ENV['DATABASE_USER'],
+//     $_ENV['DATABASE_PASSWORD'],
+//     $_ENV['DATABASE_NAME']
+// ) or die('Unable to connect to database');
 
 $feedback = [
     'success' => false,
@@ -31,7 +36,7 @@ if (isset($_POST['newSale'])) {
         'signed_by' => $signedBy,
     ];
 
-    if (\Sale::create($data)) {
+    if (Sale::create($data)) {
         $feedback['success'] = true;
         $feedback['message'] = 'New sale has been added successfully';
     } else {
@@ -56,23 +61,65 @@ if (isset($_GET['singleCashSale'])) {
         'signed_by' => $staffId,
     ];
 
-    try {
-        $sale->create($data);
-        $feedback['success'] = true;
-        $feedback['message'] = 'New sale has been added successfully';
-        echo json_encode($feedback);
-    } catch (Exception $e) {
-        echo $e;
+    if (Sale::create($data)) {
+        try {
+            Stock::where('id', $id)->decrement('quantity', $qty);
+            $feedback['success'] = true;
+            $feedback['message'] = 'New sale has been added successfully';
+        } catch (Exception $e) {
+            echo $e;
+        }
+    } else {
+        $feedback['success'] = false;
+        $feedback['message'] = 'Could not add a new sale';
     }
-    // if(Sale::create($data)) {
-    //     $feedback['success'] = true;
-    //     $feedback['message'] = 'New sale has been added successfully';
-    // } else {
-    //     $feedback['success'] = false;
-    //     $feedback['message'] = 'Could not add a new sale';
-    // }
 
-    // echo json_encode($feedback);
+    echo json_encode($feedback);
+}
+
+if (isset($_GET['allSales'])) {
+
+    $staffId = $_GET['staffId'];
+
+    if (!$staffId) {
+
+        $sales = Sale::select(
+            'staffs.fname as fname',
+            'staffs.lname as lname',
+            'stock.name',
+            'stock.price',
+            'stock.quantity as remain',
+            'sales.quantity',
+            'sales.amount',
+            'sales.paid_with',
+            'sales.created_at'
+        )
+            ->join('stock', 'stock.id', 'sales.stock_id')
+            ->join('staffs', 'staffs.id', 'sales.signed_by')
+            ->get();
+
+        echo json_encode($sales);
+        
+    } else {
+
+        $sales = Sale::where('sales.signed_by', $staffId)
+            ->select(
+                'staffs.fname as fname',
+                'staffs.lname as lname',
+                'stock.name',
+                'stock.price',
+                'stock.quantity as remain',
+                'sales.quantity',
+                'sales.amount',
+                'sales.paid_with',
+                'sales.created_at'
+            )
+            ->join('stock', 'stock.id', 'sales.stock_id')
+            ->join('staffs', 'staffs.id', 'sales.signed_by')
+            ->get();
+
+            echo json_encode($sales);
+    }
 }
 
 ?>

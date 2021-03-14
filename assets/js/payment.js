@@ -252,7 +252,7 @@ const getAllStocks = () => {
             var stocks = JSON.parse(xhr.response);
 
             sessionStorage.setItem('stocks', JSON.stringify(stocks));
-
+            
             for (let k = 0; k < allSelect.length; k++) {
                 
                 for (let i = 0; i < stocks.length; i++) {
