@@ -6,10 +6,10 @@ Run <addr>cd server</addr>
 Run <addr>composer install</addr>
 
 To set database name, go to .env file and replace update the database connection as below:
-DATABASE_HOST=localhost
-DATABASE_USER=root
-DATABASE_PASSWORD=
-DATABASE_NAME=ace
+>   DATABASE_HOST=localhost
+>   DATABASE_USER=root
+>   DATABASE_PASSWORD=
+>   DATABASE_NAME=ace
 
 
 Run <addr>php database/migration.php</addr> to create your database tables
