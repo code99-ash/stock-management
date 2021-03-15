@@ -56,10 +56,10 @@
             <h4 class="lead">Stock Inventory System</h4>   
         </div>
     </div>
-      <nav style="background: #ddd" class="mb-3">
-       <ul class="nav nav-tabs">
+      <nav style="background: #ddd" class="mb-5">
+       <ul class="nav">
          <li class="nav-item">
-           <a href="#" class="btn bg-white text-success mr-1 px-5 py-2">Active</a>
+           <a href="#" id="staff_name" class="btn bg-white text-success mr-1 px-5 py-2">Pay with Card</a>
          </li>
          <li class="nav-item">
            <a href="#" class="btn bg-white text-success mr-1 px-5 py-2" data-toggle="modal" data-target="#payment">Pay with Card</a>
@@ -104,6 +104,11 @@ include 'partials/footer.php';
 <script src = "assets/js/main.js"></script>
 <script src = "assets/js/payment.js"></script>
 <script>
+    const setStaffName = () => {
+      document.querySelector('#staff_name').innerHTML = staff['fname'];
+    }
+
+    setStaffName();
 
     var xhr = new XMLHttpRequest();
 
