@@ -48,6 +48,7 @@
           
           // include 'partials/top-nav.php';
           include 'partials/payment-modal.php';
+          include 'partials/sale-edit-modal.php';
      ?>
     <div class="jumbotron custom-jumbotron bg-success text-light rounded-0 mb-0">
           <div class="container">
@@ -111,12 +112,30 @@ include 'partials/footer.php';
 
             var sales = JSON.parse(xhr.response);
             var tbody = document.querySelector('tbody#tab');
-
-            console.log(sales)
-
+            var saleArr = new Array();
+            
             for (let i = 0; i < sales.length; i++) {
               const element = sales[i];
-              tr = document.createElement('tr');
+              
+              // {id, name, price, quantity} = sales[i];
+              saleArr = [...saleArr, {
+                                        id: element.id, 
+                                        name: element.name, 
+                                        price: element.price, 
+                                        quantity: element.quantity
+                                      }];
+              
+
+              const id = element['id'];
+              
+              var editBtn = `<button class="btn btn-sm btn-default btn-primary" 
+                              onclick="showSaleEditModal(${id})"
+                              data-toggle="modal" data-target="#saleEdit">
+                              edit
+                            </button>`;
+
+                  tr = document.createElement('tr');
+                  
 
               let tdZero = document.createElement('td'); // Zero td For item Name
                   tdZero.innerHTML = i + 1;
@@ -132,6 +151,7 @@ include 'partials/footer.php';
                   
               let tdThird = document.createElement('td'); // Third td For Quantity
                   tdThird.innerHTML = element['quantity'];
+                  tdThird.setAttribute('id', `quantity_${id}`);
                   tr.appendChild(tdThird);
                   
               let tdFourth = document.createElement('td'); // Fourth td For Staff name
@@ -142,17 +162,52 @@ include 'partials/footer.php';
                   tdFifth.innerHTML = element['created_at'];
                   tr.appendChild(tdFifth);
                   
-              // let tdFifth = document.createElement('td'); // Fifth td For Timestamp
-              //     tdFifth.innerHTML = sales['created_at'];
-              //     tr.appendChild(tdFifth);
+              let tdSixth = document.createElement('td'); // Sixth td For Timestamp
+                  tdSixth.innerHTML = editBtn;
+                  tr.appendChild(tdSixth);
 
               tbody.appendChild(tr)
             }
+            
+            sessionStorage.setItem('mySales', JSON.stringify(saleArr))
         }
     };
 
     xhr.open("get", `server/api/sales.php?allSales=true&staffId=${staffId}`, true);
     xhr.send(null);
+
+    const showSaleEditModal = (id) => {
+      const mySales = JSON.parse(sessionStorage.getItem('mySales'))
+      var thisSale = mySales.find(i => i.id == id);
+      // console.log("this sale", thisSale)
+
+      document.querySelector('#sale_id').value = thisSale.id;
+      document.querySelector('#edit_sold').value = thisSale.name;
+      document.querySelector('#edit_qty').value = thisSale.quantity;
+    }
+
+    const updateSale = () => {
+      const id = document.querySelector('#sale_id').value;
+      const qty = document.querySelector('#edit_qty').value;
+      
+      console.log(`id: ${id}; qty: ${qty}`)
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200){
+            const res = JSON.parse(xhr.response);
+            if(res.success) {
+              document.querySelector('.close').click();
+              document.querySelector(`#quantity_${id}`).innerHTML = qty;
+
+            }
+        }
+
+        xhr.open("get", `server/api/sales.php?updateSale=true&id=${id}&qty=${qty}`, true);
+        xhr.send(null);
+      }
+
+  }
 </script>
 </body>
 </html>

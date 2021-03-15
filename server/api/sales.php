@@ -1,13 +1,6 @@
 <?php
 require '../vendor/autoload.php';
 
-// $dbc = mysqli_connect(
-//     $_ENV['DATABASE_HOST'],
-//     $_ENV['DATABASE_USER'],
-//     $_ENV['DATABASE_PASSWORD'],
-//     $_ENV['DATABASE_NAME']
-// ) or die('Unable to connect to database');
-
 $feedback = [
     'success' => false,
     'message' => '',
@@ -104,6 +97,7 @@ if (isset($_GET['allSales'])) {
         $staffId = $_GET['staffId'];
         $sales = Sale::where('sales.signed_by', $staffId)
             ->select(
+                'sales.id',
                 'staffs.fname as fname',
                 'staffs.lname as lname',
                 'stock.name',
@@ -121,6 +115,29 @@ if (isset($_GET['allSales'])) {
 
             echo json_encode($sales);
     }
+}
+
+if(isset($_GET['updateSale'])) {
+    
+    $id = $_GET['id'];
+    $qty = $_GET['qty'];
+
+    $data = ['quantity' => $qty];
+
+    
+    if(Sale::where('id', $id)->update($data)) 
+    {
+        $feedback['success'] = true;
+        $feedback['message'] = 'item updated successfully';
+    }
+    else
+    {
+        $feedback['success'] = false;
+        $feedback['message'] = 'item failed to update';
+    }
+
+    echo json_encode($feedback);
+    
 }
 
 ?>
